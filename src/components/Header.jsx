@@ -1,38 +1,110 @@
 // src/components/Header.jsx
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/images/logo.svg'
+import SolidButton from './customs/buttons/SolidButton'
 
-import { UserIcon, Bars4Icon, MagnifyingGlassCircleIcon } from '@heroicons/react/24/solid'
-import { Layout, Row, Col, Button } from 'antd'
+import {
+  Bars4Icon,
+  ArrowRightStartOnRectangleIcon,
+  
+} from '@heroicons/react/24/solid'
+
+import { QuestionMarkCircleIcon, 
+  UserCircleIcon,
+  ComputerDesktopIcon
+ } from '@heroicons/react/24/outline'
+
+import {
+  Layout,
+  Row,
+  Col,
+  Button,
+  Drawer,
+  List,
+  Typography,
+  Menu
+} from 'antd'
+
+import { Link } from 'react-router-dom'
+
+const { Text } = Typography
 
 const { Header } = Layout
 
 const HeaderComponent = () => {
+
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const openDrawer = () => setIsDrawerOpen(true)
+  const closeDrawer = () => setIsDrawerOpen(false)
+
+
   return (
-    <Header className='bg-sky-500 flex items-center px-4 h-16'>
+    <Header className='flex items-center px-4 h-16 border-b shadow-md bg-white'>
 
       {/* Inner container */}
       <Row className='w-full flex justify-between items-center' >
         {/* Logo */}
-        <Col>
-          <img src={logo} className='w-24' alt="" />
-        </Col>
+        <Link to='/'>
+          <Col>
+            <img src={logo} className='w-24' alt="" />
+          </Col>
+        </Link>
+
 
         {/* Hamburger icon for mobile menu */}
         <Col className='block md:hidden'>
-          <Button type='text' icon={<Bars4Icon width={30} color='white' />} />
+          <Button type='text' icon={<Bars4Icon width={30} color='black' onClick={openDrawer} />} />
         </Col>
 
+        {/* Drawer For the Mobile Menu */}
+        <Drawer title='Menu' placement='right' onClose={closeDrawer} open={isDrawerOpen} >
+          <List
+            itemLayout="horizontal"
+            dataSource={[
+              {
+                icon: <QuestionMarkCircleIcon width={22} height={22} />,
+                title: 'Help',
+                link: '/help'
+              },
+              {
+                icon: <ComputerDesktopIcon width={22} height={22} />,
+                title: 'Appointments',
+                link: '/appointments'
+              },
+              {
+                icon: <ArrowRightStartOnRectangleIcon width={22} height={22} />,
+                title: 'Login',
+                link: '/login'
+              },
+            ]}
+            renderItem={(item) => (
+            <Link to={item.link}>
+                <List.Item className="hover:bg-sky-100 rounded-sm cursor-pointer">
+                  <List.Item.Meta
+                    className='pl-2'
+                    avatar={item.icon}
+                    title={<Text strong className="text-sm">{item.title}</Text>}
+                  />
+                </List.Item>
+              </Link>
+            )}
+          />
+        </Drawer>
+
         {/* Full menu - hidden on small screens */}
-        <Col className='hidden md:flex space-x-4'>
-          <Button type='primary'>Are you a practionner ?</Button>
-          <Button type="primary" icon={<MagnifyingGlassCircleIcon width={22} />} iconPosition='start'>
-            Search
-          </Button>
+        <Col className='hidden md:flex space-x-4 items-center'>
+          <Link to='/login'>
+            <SolidButton icon={<ComputerDesktopIcon />}  text='Appointements' />
+          </Link>
+          <Link to='/'>
+            <SolidButton icon={<QuestionMarkCircleIcon />} text='Help' />
+          </Link>
+          <Link to='/login'>
+            <SolidButton icon={<ArrowRightStartOnRectangleIcon />} text='Login' />
+          </Link>
         </Col>
       </Row>
     </Header>
   )
 }
-
 export default HeaderComponent

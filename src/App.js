@@ -8,6 +8,7 @@ function App() {
     <>
       <HeaderComponent />
       <main>
+        
         <Outlet />
       </main>
     </>
