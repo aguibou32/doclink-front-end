@@ -6,13 +6,14 @@ import SolidButton from './customs/buttons/SolidButton'
 import {
   Bars4Icon,
   ArrowRightStartOnRectangleIcon,
-  
+
 } from '@heroicons/react/24/solid'
 
-import { QuestionMarkCircleIcon, 
-  UserCircleIcon,
-  ComputerDesktopIcon
- } from '@heroicons/react/24/outline'
+import {
+  QuestionMarkCircleIcon,
+  ComputerDesktopIcon,
+  LanguageIcon
+} from '@heroicons/react/24/outline'
 
 import {
   Layout,
@@ -22,10 +23,11 @@ import {
   Drawer,
   List,
   Typography,
-  Menu
+  Space
 } from 'antd'
 
 import { Link } from 'react-router-dom'
+import FilledButton from './customs/buttons/FilledButton'
 
 const { Text } = Typography
 
@@ -39,7 +41,7 @@ const HeaderComponent = () => {
 
 
   return (
-    <Header className='flex items-center px-4 h-16 border-b shadow-md bg-white'>
+    <Header className='h-16 flex items-center px-4 bg-white border-b shadow-md'>
 
       {/* Inner container */}
       <Row className='w-full flex justify-between items-center' >
@@ -53,48 +55,50 @@ const HeaderComponent = () => {
 
         {/* Hamburger icon for mobile menu */}
         <Col className='block md:hidden'>
-          <Button type='text' icon={<Bars4Icon width={30} color='black' onClick={openDrawer} />} />
+          <Button icon={<Bars4Icon width={30} color='black' onClick={openDrawer} />} />
         </Col>
 
         {/* Drawer For the Mobile Menu */}
         <Drawer title='Menu' placement='right' onClose={closeDrawer} open={isDrawerOpen} >
-          <List
-            itemLayout="horizontal"
-            dataSource={[
-              {
-                icon: <QuestionMarkCircleIcon width={22} height={22} />,
-                title: 'Help',
-                link: '/help'
-              },
-              {
-                icon: <ComputerDesktopIcon width={22} height={22} />,
-                title: 'Appointments',
-                link: '/appointments'
-              },
-              {
-                icon: <ArrowRightStartOnRectangleIcon width={22} height={22} />,
-                title: 'Login',
-                link: '/login'
-              },
-            ]}
-            renderItem={(item) => (
-            <Link to={item.link}>
-                <List.Item className="hover:bg-sky-100 rounded-sm cursor-pointer">
-                  <List.Item.Meta
-                    className='pl-2'
-                    avatar={item.icon}
-                    title={<Text strong className="text-sm">{item.title}</Text>}
-                  />
-                </List.Item>
-              </Link>
-            )}
-          />
+            <List
+              itemLayout="horizontal"
+              dataSource={[
+                {
+                  icon: <QuestionMarkCircleIcon width={22} height={22} />,
+                  title: 'Help',
+                  link: '/help'
+                },
+                {
+                  icon: <ComputerDesktopIcon width={22} height={22} />,
+                  title: 'Appointments',
+                  link: '/appointments'
+                },
+                {
+                  icon: <ArrowRightStartOnRectangleIcon width={22} height={22} />,
+                  title: 'Login',
+                  link: '/login'
+                },
+              ]}
+              renderItem={(item) => (
+                <Link to={item.link}>
+                  <List.Item className="rounded-sm cursor-pointer hover:bg-sky-100">
+                    <List.Item.Meta
+                      className='pl-2'
+                      avatar={item.icon}
+                      title={<Text strong className="text-sm">{item.title}</Text>}
+                    />
+                  </List.Item>
+                </Link>
+              )}
+            />
+            <FilledButton icon={<LanguageIcon width={24} />} text='English' />
         </Drawer>
 
         {/* Full menu - hidden on small screens */}
-        <Col className='hidden md:flex space-x-4 items-center'>
+        <Space className='hidden md:flex' align='center' size='large'>
+          <FilledButton icon={<LanguageIcon width={24} color='black' />} />
           <Link to='/login'>
-            <SolidButton icon={<ComputerDesktopIcon />}  text='Appointements' />
+            <SolidButton icon={<ComputerDesktopIcon />} text='Appointements' />
           </Link>
           <Link to='/'>
             <SolidButton icon={<QuestionMarkCircleIcon />} text='Help' />
@@ -102,7 +106,7 @@ const HeaderComponent = () => {
           <Link to='/login'>
             <SolidButton icon={<ArrowRightStartOnRectangleIcon />} text='Login' />
           </Link>
-        </Col>
+        </Space>
       </Row>
     </Header>
   )
