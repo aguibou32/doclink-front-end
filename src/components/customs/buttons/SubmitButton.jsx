@@ -2,7 +2,7 @@
 import React from 'react'
 import { Button } from "antd"
 
-const SubmitButton = ({ icon = null , text = '', isSubmitting = false }) => {
+const SubmitButton = ({ icon = null , text = '', isDisabled = false, isSubmitting = false }) => {
 
     const placeholderIcon = <span className="w-5 h-5 invisible" />
 
@@ -12,10 +12,10 @@ const SubmitButton = ({ icon = null , text = '', isSubmitting = false }) => {
             type="primary"
             icon={icon ? React.cloneElement(icon, { className: 'h-5 w-5' }): placeholderIcon}
             loading={isSubmitting}
-            disabled={isSubmitting}
+            disabled={isDisabled || isSubmitting}
             htmlType='submit'
         >
-            {text || 'Submit'}
+            {isSubmitting ? 'Submitting...': text || 'Submit'}
         </Button>
     )
 }
