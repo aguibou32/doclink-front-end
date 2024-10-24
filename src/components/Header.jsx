@@ -1,5 +1,5 @@
 // src/components/Header.jsx
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import logo from '../assets/images/logo.svg'
 import SolidButton from './customs/buttons/SolidButton'
 
@@ -26,12 +26,12 @@ import {
   Space
 } from 'antd'
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import FilledButton from './customs/buttons/FilledButton'
 
 const { Text } = Typography
-
 const { Header } = Layout
+
 
 const HeaderComponent = () => {
 
@@ -39,18 +39,25 @@ const HeaderComponent = () => {
   const openDrawer = () => setIsDrawerOpen(true)
   const closeDrawer = () => setIsDrawerOpen(false)
 
+  const location = useLocation()
+
+  useEffect(() => {
+    closeDrawer()
+  }, [location])
 
   return (
-    <Header className='h-16 flex items-center px-4 bg-white border-b shadow-md'>
+    <Header className='h-14 flex justify-center items-center px-4 bg-red-200 border-b shadow-sm'>
 
       {/* Inner container */}
       <Row className='w-full flex justify-between items-center' >
         {/* Logo */}
-        <Link to='/'>
-          <Col>
-            <img src={logo} className='w-24' alt="" />
-          </Col>
-        </Link>
+        <Col>
+          <Link to='/'>
+            <Col>
+              <img src={logo} className='w-24' alt="" />
+            </Col>
+          </Link>
+        </Col>
 
 
         {/* Hamburger icon for mobile menu */}
@@ -60,38 +67,38 @@ const HeaderComponent = () => {
 
         {/* Drawer For the Mobile Menu */}
         <Drawer title='Menu' placement='right' onClose={closeDrawer} open={isDrawerOpen} >
-            <List
-              itemLayout="horizontal"
-              dataSource={[
-                {
-                  icon: <QuestionMarkCircleIcon width={22} height={22} />,
-                  title: 'Help',
-                  link: '/help'
-                },
-                {
-                  icon: <ComputerDesktopIcon width={22} height={22} />,
-                  title: 'Appointments',
-                  link: '/appointments'
-                },
-                {
-                  icon: <ArrowRightStartOnRectangleIcon width={22} height={22} />,
-                  title: 'Login',
-                  link: '/login'
-                },
-              ]}
-              renderItem={(item) => (
-                <Link to={item.link}>
-                  <List.Item className="rounded-sm cursor-pointer hover:bg-sky-100">
-                    <List.Item.Meta
-                      className='pl-2'
-                      avatar={item.icon}
-                      title={<Text strong className="text-sm">{item.title}</Text>}
-                    />
-                  </List.Item>
-                </Link>
-              )}
-            />
-            <FilledButton icon={<LanguageIcon width={24} />} text='English' />
+          <List
+            itemLayout="horizontal"
+            dataSource={[
+              {
+                icon: <QuestionMarkCircleIcon width={22} height={22} />,
+                title: 'Help',
+                link: '/help'
+              },
+              {
+                icon: <ComputerDesktopIcon width={22} height={22} />,
+                title: 'Appointments',
+                link: '/appointments'
+              },
+              {
+                icon: <ArrowRightStartOnRectangleIcon width={22} height={22} />,
+                title: 'Login',
+                link: '/login'
+              },
+            ]}
+            renderItem={(item) => (
+              <Link to={item.link}>
+                <List.Item className="rounded-sm cursor-pointer hover:bg-sky-100">
+                  <List.Item.Meta
+                    className='pl-2'
+                    avatar={item.icon}
+                    title={<Text strong className="text-sm">{item.title}</Text>}
+                  />
+                </List.Item>
+              </Link>
+            )}
+          />
+          <FilledButton icon={<LanguageIcon width={24} />} text='English' />
         </Drawer>
 
         {/* Full menu - hidden on small screens */}

@@ -1,14 +1,15 @@
 import { Form, Input } from 'antd'
 
-const TextInput = ({ name, rules, prefix, type = 'text', label, placeholder }) => {
+const PasswordInput = ({ name, rules, prefix, type = 'text', label, placeholder }) => {
   return (
     <Form.Item
-      hasFeedback
+      // hasFeedback
       label={label}
       name={name}
       rules={rules}
     >
-      <Input
+      <Input.Password
+        allowClear
         prefix={prefix}
         type={type}
         placeholder={placeholder}
@@ -16,4 +17,4 @@ const TextInput = ({ name, rules, prefix, type = 'text', label, placeholder }) =
     </Form.Item>
   )
 }
-export default TextInput
+export default PasswordInput
