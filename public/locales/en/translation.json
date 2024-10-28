@@ -33,5 +33,9 @@
   "passwordsDoNotMatch": "Passwords do not match !",
   "nameInvalid": "Name should contain only letters without spaces or special characters.",
   "surnameInvalid": "Surname should contain only letters without spaces or special characters.",
-  "termsOfUse": "Terms of Use."
+  "termsOfUse": "Terms of Use.",
+  "resetPasswordPrompt": "Please provide the email address associated with your account to reset your password.",
+  "forgotPasswordPrompt": "Forgot you password ?",
+  "resetYourPassword": "Reset Your Password",
+  "resetPasswordPromptSecond": "Please enter your new password and confirm it."
 }

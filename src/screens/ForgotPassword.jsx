@@ -10,10 +10,7 @@ import {
 
 import SubmitButton from '../components/customs/buttons/SubmitButton'
 import TextInput from "../components/customs/inputs/TextInput"
-import CheckBoxInput from "../components/customs/inputs/CheckboxInput"
-import { EnvelopeIcon, LockClosedIcon } from "@heroicons/react/24/outline"
-import PasswordInput from "../components/customs/inputs/PasswordInput"
-import { Link } from "react-router-dom"
+import { EnvelopeIcon } from "@heroicons/react/24/outline"
 
 import { useTranslation } from "react-i18next"
 
@@ -21,7 +18,7 @@ const { Content } = Layout
 const { Text, Title } = Typography
 
 
-const Login = () => {
+const ForgotPassword = () => {
 
     const { t } = useTranslation()
 
@@ -36,11 +33,11 @@ const Login = () => {
     const handleFormChange = () => {
         const hasErrors = form
             .getFieldsError()
-            .some(({ errors }) => errors.length > 0);
+            .some(({ errors }) => errors.length > 0)
 
-        const allTouched = form.isFieldsTouched(['email', 'password'], true)
+        const emailTouched = form.isFieldTouched('email')
 
-        setIsFormValid(allTouched && !hasErrors);
+        setIsFormValid(emailTouched && !hasErrors)
     }
 
     useEffect(() => {
@@ -50,9 +47,9 @@ const Login = () => {
     return (
         <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4">
             <Card>
-                <Flex justify="space-between">
-                    <Title level={5}>{t('newHere')}</Title>
-                    <Text><Link to='/register'>{t('createAccount')}</Link></Text>
+                <Flex justify="center" align="center" vertical>
+                    <Title level={5}>{t('forgotPasswordPrompt')}</Title>
+                    <Text className="text-center">{t('resetPasswordPrompt')}</Text>
                 </Flex>
             </Card>
             <Card>
@@ -62,8 +59,6 @@ const Login = () => {
                     name="login"
                     initialValues={{
                         email: '',
-                        password: '',
-                        remember: true,
                     }}
                     onFinish={onFinish}
                     onFieldsChange={handleFormChange}
@@ -80,22 +75,6 @@ const Login = () => {
                         type='email'
                         placeholder={t('emailPlaceholder')}
                     />
-
-                    <PasswordInput
-                        label={t('passwordLabel')}
-                        name='password'
-                        rules={[{ required: true, message: t('inputPassword') }]}
-                        prefix={<LockClosedIcon width={18} />}
-                        type='password'
-                        placeholder={t('passwordPlaceholder')}
-                    />
-
-                    <Flex justify="space-between" align="baseline" className="">
-                        <CheckBoxInput name='remember' value="checked" text='remember me' />
-                        <Link to='/'>
-                            {t('forgotPassword')}
-                        </Link>
-                    </Flex>
                     <SubmitButton
                         isDisabled={!clientReady || !isFormValid}
                         isSubmitting={false}
@@ -105,4 +84,4 @@ const Login = () => {
         </Content>
     )
 }
-export default Login
+export default ForgotPassword

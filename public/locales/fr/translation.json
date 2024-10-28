@@ -33,5 +33,9 @@
   "passwordsDoNotMatch": "Les mots de passe ne correspondent pas !",
   "nameInvalid": "Le prénom ne doit contenir que des lettres sans espaces ni caractères spéciaux.",
   "surnameInvalid": "Le nom de famille ne doit contenir que des lettres sans espaces ni caractères spéciaux.",
-  "termsOfUse": "Conditions d'utilisation."
+  "termsOfUse": "Conditions d'utilisation.",
+  "resetPasswordPrompt": "Veuillez fournir l'adresse e-mail associée à votre compte pour réinitialiser votre mot de passe.",
+  "forgotPasswordPrompt": "Vous avez oublié votre mot de passe ?",
+  "resetYourPassword": "Réinitialisez votre mot de passe",
+  "resetPasswordPromptSecond": "Veuillez entrer votre nouveau mot de passe et le confirmer."
 }

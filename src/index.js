@@ -5,6 +5,8 @@ import App from './App'
 import Home from './screens/Home'
 import Login from './screens/Login'
 import Register from './screens/Register'
+import ForgotPassword from './screens/ForgotPassword'
+import ResetPassword from './screens/RessetPassword'
 
 import './i18n'
 
@@ -22,6 +24,8 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route index={true} element={<Home />} />
     <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
+    <Route path='/forgot-password' element={<ForgotPassword />} />
+    <Route path='/reset-password' element={<ResetPassword />} />
 
   </Route>
 

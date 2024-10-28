@@ -6,6 +6,7 @@ import {
   Typography,
   message,
   Steps,
+  Flex
 } from "antd"
 import { useTranslation } from "react-i18next"
 import {
@@ -24,10 +25,10 @@ import PasswordInput from "../components/customs/inputs/PasswordInput"
 import CheckboxInput from "../components/customs/inputs/CheckboxInput"
 
 import {
-  validateConfirmPassword,
   validateName,
+  validateSurname,
   validatePassword,
-  validateSurname
+  validateConfirmPassword,
 } from "../utils/formValidation"
 
 const { Content } = Layout
@@ -61,11 +62,11 @@ const Register = () => {
   const handleFormChange = () => {
     const hasErrors = form
       .getFieldsError()
-      .some(({ errors }) => errors.length > 0);
+      .some(({ errors }) => errors.length > 0)
 
-    const allTouched = form.isFieldsTouched(['email', 'name', 'surname', 'password', 'confirmPassword', 'termsOfUse'], true)
-
-    setIsFormValid(allTouched && !hasErrors)
+    const allTouched = form.isFieldsTouched(true)
+    const termsOfConditionsAccepted = form.getFieldValue('termsOfUse')
+    setIsFormValid(allTouched && !hasErrors && termsOfConditionsAccepted)
   }
 
   const getCurrentStepFields = () => {
@@ -136,9 +137,13 @@ const Register = () => {
             type="password"
             placeholder={t("passwordPlaceholder")}
           />
-          <CheckboxInput name="termsOfUse"
-            rules={[{ required: true, message: t('termsOfUseRequired') }]}
-            text={t('termsOfUse')} />
+          <Flex justify="start" align="baseline" >
+            <CheckboxInput
+              name="termsOfUse"
+              rules={[{ required: true, message: t('termsOfUseRequired') }]}
+              />
+              <Link to='/'>{t('termsOfUse')}</Link>
+          </Flex>
         </>
       ),
     },
