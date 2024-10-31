@@ -37,5 +37,9 @@
   "resetPasswordPrompt": "Veuillez fournir l'adresse e-mail associée à votre compte pour réinitialiser votre mot de passe.",
   "forgotPasswordPrompt": "Vous avez oublié votre mot de passe ?",
   "resetYourPassword": "Réinitialisez votre mot de passe",
-  "resetPasswordPromptSecond": "Veuillez entrer votre nouveau mot de passe et le confirmer."
+  "resetPasswordPromptSecond": "Veuillez entrer votre nouveau mot de passe et le confirmer.",
+  "enterCode": "Entrez le code envoyé à votre e-mail ou téléphone :",
+  "twoStepsVerification": "Vérification en deux étapes",
+  "problem": "Un problème ?",
+  "resendCode": "Renvoyer le code"
 }

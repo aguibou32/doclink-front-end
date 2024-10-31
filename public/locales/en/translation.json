@@ -37,5 +37,9 @@
   "resetPasswordPrompt": "Please provide the email address associated with your account to reset your password.",
   "forgotPasswordPrompt": "Forgot you password ?",
   "resetYourPassword": "Reset Your Password",
-  "resetPasswordPromptSecond": "Please enter your new password and confirm it."
+  "resetPasswordPromptSecond": "Please enter your new password and confirm it.",
+  "enterCode": "Enter the code sent to your email or phone:",
+  "twoStepsVerification": "Two steps verification",
+  "problem": "A problem?",
+  "resendCode": "Resend Code"
 }
