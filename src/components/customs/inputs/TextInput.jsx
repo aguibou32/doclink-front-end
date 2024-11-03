@@ -1,4 +1,4 @@
-import { Form, Input } from "antd";
+import { Form, Input } from "antd"
 
 const TextInput = ({
   name,

@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react"
-import { Modal, Input, Typography, message, Dropdown, Menu, Form } from "antd"
+import { Modal, Input, Typography, message, Dropdown, Form, Button } from "antd"
 import SubmitButton from "./customs/buttons/SubmitButton"
 import { useTranslation } from "react-i18next"
-import LinkButton from "./customs/buttons/LinkButton"
 
 const { Text } = Typography
 
@@ -13,9 +12,8 @@ const VerificationCodeModal = ({ isOpen, handleClose }) => {
     const [resending, setResending] = useState(false)
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true)
 
-    // Watch for changes in otpCode to enable/disable submit button
     useEffect(() => {
-        setIsSubmitDisabled(otpCode.length !== 6) // Enable if exactly 6 digits are entered
+        setIsSubmitDisabled(otpCode.length !== 6)
     }, [otpCode])
 
     const handleOtpChange = (value) => {
@@ -23,39 +21,49 @@ const VerificationCodeModal = ({ isOpen, handleClose }) => {
     }
 
     const handleSubmit = (e) => {
-        e.preventDefault() // Prevent page reload
+        e.preventDefault()
         if (otpCode.length < 6) {
-            message.error(t("enterValidCode")) // Display localized error message
+            message.error(t("enterValidCode"))
             return
         }
 
         setLoading(true)
-        // Simulate a submission (replace with real API call)
         setTimeout(() => {
             setLoading(false)
-            message.success(t("verificationSuccess")) // Success message
+            message.success(t("verificationSuccess"))
             handleClose()
         }, 3000)
     }
 
     const handleResend = (method) => {
         setResending(true)
-        message.info(t("resendMessage", { method })) // Display resend message
+        message.info(t("resendMessage", { method }))
         setTimeout(() => {
             setResending(false)
             message.success(t("codeSent", { method }))
         }, 2000)
     }
 
-    const resendMenu = (
-        <Menu
-            onClick={({ key }) => handleResend(key)}
-            items={[
-                { label: t("email"), key: "email" },
-                { label: t("phoneNumber"), key: "phone number" },
-            ]}
-        />
-    )
+
+
+    const items = [
+        {
+            key: '1',
+            label: (
+                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                    1st menu item
+                </a>
+            ),
+        },
+        {
+            key: '2',
+            label: (
+                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+                    2nd menu item
+                </a>
+            ),
+        }
+    ]
 
     return (
         <Modal
@@ -64,13 +72,14 @@ const VerificationCodeModal = ({ isOpen, handleClose }) => {
             onCancel={handleClose}
             maskClosable={false}
             centered
-            footer={null} // Footer moved inside the form
+            footer={null}
             className="max-w-xs md:max-w-sm"
         >
             <Form onSubmit={handleSubmit}>
                 <div className="flex flex-col items-center mt-16 mb-8 space-y-4">
                     <Text level="4">{t("enterCode")}</Text>
                     <Input.OTP
+                        size="large"
                         value={otpCode}
                         onChange={handleOtpChange}
                         maxLength={6}
@@ -89,12 +98,17 @@ const VerificationCodeModal = ({ isOpen, handleClose }) => {
                     </SubmitButton>
                     <div className="flex justify-center items-center gap-2">
                         <Text>{t("problem")}</Text>
-                        <Dropdown menu={resendMenu} trigger={["click"]}>
-                            <LinkButton
-                                text={t("resendCode")}
-                                isLoading={resending}
-                                handleClick={handleResend}
-                            />
+                        <Dropdown
+                            menu={{
+                                items,
+                            }}
+                            placement="bottom"
+                            arrow={{
+                                pointAtCenter: true,
+                            }}
+                        >
+                            {/* <LinkButton text="resend Code">asdfasdf</LinkButton> */}
+                            <Button type="link">Resend Code</Button>
                         </Dropdown>
                     </div>
                 </div>
@@ -102,5 +116,4 @@ const VerificationCodeModal = ({ isOpen, handleClose }) => {
         </Modal>
     )
 }
-
 export default VerificationCodeModal
