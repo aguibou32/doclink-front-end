@@ -1,4 +1,4 @@
-
+import moment from "moment"
 
 export const validateName = (t) => ({
   validator(_, value) {
@@ -38,7 +38,7 @@ export const validatePassword = (t) => ({
     if (!value || /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(value)) {
       return Promise.resolve();
     }
-    return Promise.reject(new Error(t("passwordInvalid")));
+    return Promise.reject(new Error(t("invalidPassword")));
   },
 })
 
@@ -50,5 +50,3 @@ export const validateConfirmPassword = (getFieldValue, t) => ({
     return Promise.reject(new Error(t("passwordsDoNotMatch")))
   },
 })
-
-

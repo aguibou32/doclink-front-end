@@ -8,7 +8,6 @@ import {
     Typography,
 } from "antd"
 
-import VerificationCodeModal from "../components/VerificationCodeModal"
 import SubmitButton from '../components/customs/buttons/SubmitButton'
 import TextInput from "../components/customs/inputs/TextInput"
 import CheckBoxInput from "../components/customs/inputs/CheckboxInput"
@@ -57,7 +56,7 @@ const Login = () => {
     }, [])
 
     return (
-        <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4">
+        <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4 md:max-w-lg">
             <Card>
                 <Flex justify="space-between">
                     <Title level={5}>{t('newHere')}</Title>
@@ -118,14 +117,6 @@ const Login = () => {
                     />
                 </Form>
             </Card>
-
-            {
-                isEmailVerificationModalOpen && (
-                    <VerificationCodeModal
-                        isOpen={isEmailVerificationModalOpen}
-                        handleClose={() => setIsEmailVerificationModalOpen(false)}
-                    />)
-            }
         </Content>
     )
 }

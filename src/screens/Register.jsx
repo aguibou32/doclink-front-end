@@ -7,7 +7,6 @@ import {
   message,
   Steps,
   Flex,
-  Radio
 } from "antd"
 import { useTranslation } from "react-i18next"
 import {
@@ -21,6 +20,7 @@ import { Link } from "react-router-dom"
 import FilledButton from "../components/customs/buttons/FilledButton"
 import SubmitButton from "../components/customs/buttons/SubmitButton"
 import SolidButton from "../components/customs/buttons/SolidButton"
+import LinkButton from "../components/customs/buttons/LinkButton"
 import TextInput from "../components/customs/inputs/TextInput"
 import PasswordInput from "../components/customs/inputs/PasswordInput"
 import CheckboxInput from "../components/customs/inputs/CheckboxInput"
@@ -38,6 +38,8 @@ import {
 
 } from "../slices/usersApiSlice"
 import GenderInput from "../components/customs/inputs/GenderInput"
+import DOBInput from "../components/customs/inputs/DOBInput"
+import TermsAndConditionsModal from "../components/customs/TermsAndConditionsModal"
 
 const { Content } = Layout
 const { Text, Title } = Typography
@@ -52,20 +54,20 @@ const Register = () => {
 
   const [checkEmailInUse, { isLoading: isCheckingEmailInUse }] = useCheckEmailInUseMutation()
 
-  const [alert, setAlert] = useState({ type: '', message: '' })
+  // const [alert, setAlert] = useState({ type: '', message: '' })
+  const [isTermsModalIsOpen, setIsTermsModalIsOpen] = useState(false)
 
   const handleNext = async () => {
-
     try {
       const stepFields = getCurrentStepFields()
-      await form.validateFields(stepFields)
+      await form.validateFields(stepFields) // Validate fields for the current step
 
+      // Only perform email check if "email" is in stepFields
       if (stepFields.includes('email')) {
         const email = form.getFieldValue('email')
         try {
           await checkEmailInUse({ email }).unwrap()
           form.setFields([{ name: 'email', errors: [] }])
-          setCurrent((prev) => prev + 1)
         } catch (error) {
           form.setFields([
             {
@@ -73,14 +75,19 @@ const Register = () => {
               errors: [t("emailInUseError")],
             },
           ])
+          return // Stop progressing to the next step if email is in use
         }
       }
+
+      // Move to the next step if validation and (if needed) email check pass
+      setCurrent((prev) => prev + 1)
     } catch (error) {
       console.error("Validation failed:", error)
     }
   }
 
-  const prev = () => setCurrent((prev) => prev - 1)
+
+  const handlePrevious = () => setCurrent((prev) => prev - 1)
 
   const onFinish = async (values) => {
     console.log("Received values:", values)
@@ -100,7 +107,7 @@ const Register = () => {
 
   const getCurrentStepFields = () => {
     if (current === 0) return ["email"]
-    if (current === 1) return ["name", "surname"]
+    if (current === 1) return ["gender", "dob", "name", "surname"]
     if (current === 2) return ["password", "confirmPassword"]
     return []
   }
@@ -128,6 +135,9 @@ const Register = () => {
         <Flex vertical gap={14}>
           <GenderInput
             rules={[{ required: true, message: t("genderRequired") }]}
+          />
+          <DOBInput
+            rules={[{ required: true, message: t("dobRequired") }]}
           />
           <TextInput
             name="name"
@@ -169,12 +179,15 @@ const Register = () => {
             type="password"
             placeholder={t("passwordPlaceholder")}
           />
-          <Flex justify="start" align="baseline" >
+          <Flex justify="start" horizontal>
             <CheckboxInput
               name="termsOfUse"
-              rules={[{ required: true, message: t('termsOfUseRequired') }]}
+              rules={[{ required: true, message: t('termsAcceptance') }]}
             />
-            <Link to='/'>{t('termsOfUse')}</Link>
+            <LinkButton
+              handleClick={() => setIsTermsModalIsOpen(true)}
+              text={t('termsAcceptance')}
+            />
           </Flex>
         </>
       ),
@@ -245,10 +258,10 @@ const Register = () => {
             ))}
           </div>
 
-          <div className="flex flex-row justify-between mt-8">
+          <Flex horizontal justify="between" className="mt-8">
             <div className="flex-1">
               {current > 0 && (
-                <FilledButton handleClick={prev} text={t("previous")} />
+                <FilledButton handleClick={handlePrevious} text={t("previous")} />
               )}
             </div>
             <div>
@@ -269,9 +282,18 @@ const Register = () => {
                 />
               )}
             </div>
-          </div>
+          </Flex>
         </Form>
       </Card>
+
+      {
+        isTermsModalIsOpen &&
+        (<TermsAndConditionsModal
+          isOpen={isTermsModalIsOpen}
+          handleClose={() => setIsTermsModalIsOpen(false)}
+        />)
+      }
+
     </Content>
   )
 }
