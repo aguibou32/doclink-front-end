@@ -65,5 +65,9 @@
   "changesTitle": "Modifications des Conditions",
   "changesContent": "Nous pouvons mettre à jour ces conditions générales de temps à autre. Les utilisateurs seront informés des modifications importantes, et l'utilisation continue de la plateforme implique l'acceptation des conditions mises à jour.",
   "contactTitle": "Informations de Contact",
-  "contactContent": "Si vous avez des questions concernant ces conditions générales, veuillez contacter notre équipe de support."
+  "contactContent": "Si vous avez des questions concernant ces conditions générales, veuillez contacter notre équipe de support.",
+  "phoneNumberRequired": "Le numéro de téléphone est requis.",
+  "invalidPhoneNumber": "Numéro de téléphone invalid",
+  "phoneLabel": "Numéro de téléphone",
+  "phonePlaceholder": "Entrez votre numéro de téléphone"
 }

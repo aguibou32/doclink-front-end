@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import moment from "moment"
+
 import {
   Layout,
   Form,
@@ -31,15 +33,19 @@ import {
   validateSurname,
   validatePassword,
   validateConfirmPassword,
+  validatePhoneNumber,
 } from "../utils/formValidation"
 
 import {
   useCheckEmailInUseMutation,
-
+  useRegisterMutation
 } from "../slices/usersApiSlice"
+
+
 import GenderInput from "../components/customs/inputs/GenderInput"
 import DOBInput from "../components/customs/inputs/DOBInput"
 import TermsAndConditionsModal from "../components/customs/TermsAndConditionsModal"
+import PhoneInputComponent from "../components/customs/inputs/PhoneInputComponent"
 
 const { Content } = Layout
 const { Text, Title } = Typography
@@ -53,8 +59,9 @@ const Register = () => {
   const [form] = Form.useForm()
 
   const [checkEmailInUse, { isLoading: isCheckingEmailInUse }] = useCheckEmailInUseMutation()
+  const [register, { isLoading: isRegisteringUser }] = useRegisterMutation()
 
-  // const [alert, setAlert] = useState({ type: '', message: '' })
+  const [alert, setAlert] = useState({ type: '', message: '' })
   const [isTermsModalIsOpen, setIsTermsModalIsOpen] = useState(false)
 
   const handleNext = async () => {
@@ -89,10 +96,30 @@ const Register = () => {
 
   const handlePrevious = () => setCurrent((prev) => prev - 1)
 
+
+
   const onFinish = async (values) => {
-    console.log("Received values:", values)
-    // console.log(response)
-    message.success("Registration successful!")
+    setAlert({ type: '', message: '' })
+    const formattedDOB = moment(values.dob).format('DD/MM/YYYY')
+    console.log(formattedDOB)
+
+    try {
+      await register({
+        name: values.name,
+        surname: values.surname,
+        gender: values.gender,
+        dob: formattedDOB,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
+        terms: values.termsOfUse
+      }).unwrap()
+    } catch (error) {
+      setAlert({
+        type: 'error',
+        message: error?.data?.message || error?.message
+      })
+    }
   }
 
   const handleFormChange = () => {
@@ -159,11 +186,18 @@ const Register = () => {
     {
       title: t("passwordLabel"),
       content: (
-        <>
+        <Flex vertical gap={14}>
+          <PhoneInputComponent
+            name='phone'
+            label={t('phoneNumber')}
+            rules={[{ required: true, message: t("phoneNumberRequired") }, validatePhoneNumber(t)]}
+            value={form.getFieldValue('phone')} 
+            onChange={(phone) => form.setFieldsValue({ phone })}
+          />
           <PasswordInput
             name="password"
             label={t("passwordLabel")}
-            rules={[{ required: true, message: t("passwordRequired") }, validatePassword(t)]}
+            rules={[validatePassword(t)]}
             prefix={<LockClosedIcon width={18} />}
             type="password"
             placeholder={t("passwordPlaceholder")}
@@ -179,7 +213,7 @@ const Register = () => {
             type="password"
             placeholder={t("passwordPlaceholder")}
           />
-          <Flex justify="start" horizontal>
+          <Flex justify="start">
             <CheckboxInput
               name="termsOfUse"
               rules={[{ required: true, message: t('termsAcceptance') }]}
@@ -189,7 +223,7 @@ const Register = () => {
               text={t('termsAcceptance')}
             />
           </Flex>
-        </>
+        </Flex>
       ),
     },
   ]
@@ -218,7 +252,7 @@ const Register = () => {
 
       <Card>
         <Form
-          disabled={isCheckingEmailInUse}
+          disabled={isCheckingEmailInUse || isRegisteringUser}
           name="register"
           form={form}
           layout="vertical"
@@ -258,10 +292,13 @@ const Register = () => {
             ))}
           </div>
 
-          <Flex horizontal justify="between" className="mt-8">
+          <Flex justify="between" className="mt-8">
             <div className="flex-1">
               {current > 0 && (
-                <FilledButton handleClick={handlePrevious} text={t("previous")} />
+                <FilledButton
+                  handleClick={handlePrevious}
+                  isDisabled={isRegisteringUser}
+                  text={t("previous")} />
               )}
             </div>
             <div>
@@ -277,15 +314,17 @@ const Register = () => {
               {current === steps.length - 1 && (
                 <SubmitButton
                   isDisabled={
-                    !clientReady || !isFormValid}
-                  isSubmitting={false}
+                    !clientReady ||
+                    !isFormValid ||
+                    isRegisteringUser
+                  }
+                  isSubmitting={isRegisteringUser}
                 />
               )}
             </div>
           </Flex>
         </Form>
       </Card>
-
       {
         isTermsModalIsOpen &&
         (<TermsAndConditionsModal
@@ -293,8 +332,8 @@ const Register = () => {
           handleClose={() => setIsTermsModalIsOpen(false)}
         />)
       }
-
     </Content>
   )
 }
+
 export default Register

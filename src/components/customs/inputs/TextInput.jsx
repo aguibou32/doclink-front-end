@@ -22,7 +22,7 @@ const TextInput = ({
         className="text-base"
       />
     </Form.Item>
-  );
-};
+  )
+}
 
 export default TextInput

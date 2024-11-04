@@ -65,5 +65,9 @@
   "changesTitle": "Changes to Terms",
   "changesContent": "We may update these Terms and Conditions from time to time. Users will be notified of significant changes, and continued use of the platform implies acceptance of the updated terms.",
   "contactTitle": "Contact Information",
-  "contactContent": "If you have any questions regarding these Terms and Conditions, please contact our support team."
+  "contactContent": "If you have any questions regarding these Terms and Conditions, please contact our support team.",
+  "phoneNumber": "Phone number",
+  "phoneNumberRequired": "Phone number is required.",
+  "invalidPhoneNumber": "Phone number invalid",
+  "phonePlaceholder": "Enter your phone number"
 }

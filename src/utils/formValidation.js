@@ -1,4 +1,5 @@
-import moment from "moment"
+import { isValidPhoneNumber } from "react-phone-number-input"
+
 
 export const validateName = (t) => ({
   validator(_, value) {
@@ -49,4 +50,14 @@ export const validateConfirmPassword = (getFieldValue, t) => ({
     }
     return Promise.reject(new Error(t("passwordsDoNotMatch")))
   },
+})
+
+
+export const validatePhoneNumber = (t) => ({
+  validator: (_, value) => {
+    if (!isValidPhoneNumber(value)) {
+      return Promise.reject(new Error(t('invalidPhoneNumber')))
+    }
+    return Promise.resolve()
+  }
 })
