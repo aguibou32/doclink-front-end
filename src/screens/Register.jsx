@@ -6,7 +6,8 @@ import {
   Typography,
   message,
   Steps,
-  Flex
+  Flex,
+  Radio
 } from "antd"
 import { useTranslation } from "react-i18next"
 import {
@@ -23,6 +24,7 @@ import SolidButton from "../components/customs/buttons/SolidButton"
 import TextInput from "../components/customs/inputs/TextInput"
 import PasswordInput from "../components/customs/inputs/PasswordInput"
 import CheckboxInput from "../components/customs/inputs/CheckboxInput"
+import AlertComponent from "../components/customs/Alert"
 
 import {
   validateName,
@@ -30,6 +32,12 @@ import {
   validatePassword,
   validateConfirmPassword,
 } from "../utils/formValidation"
+
+import {
+  useCheckEmailInUseMutation,
+
+} from "../slices/usersApiSlice"
+import GenderInput from "../components/customs/inputs/GenderInput"
 
 const { Content } = Layout
 const { Text, Title } = Typography
@@ -42,11 +50,31 @@ const Register = () => {
   const [isFormValid, setIsFormValid] = useState(false)
   const [form] = Form.useForm()
 
+  const [checkEmailInUse, { isLoading: isCheckingEmailInUse }] = useCheckEmailInUseMutation()
+
+  const [alert, setAlert] = useState({ type: '', message: '' })
+
   const handleNext = async () => {
+
     try {
       const stepFields = getCurrentStepFields()
       await form.validateFields(stepFields)
-      setCurrent((prev) => prev + 1)
+
+      if (stepFields.includes('email')) {
+        const email = form.getFieldValue('email')
+        try {
+          await checkEmailInUse({ email }).unwrap()
+          form.setFields([{ name: 'email', errors: [] }])
+          setCurrent((prev) => prev + 1)
+        } catch (error) {
+          form.setFields([
+            {
+              name: 'email',
+              errors: [t("emailInUseError")],
+            },
+          ])
+        }
+      }
     } catch (error) {
       console.error("Validation failed:", error)
     }
@@ -54,8 +82,9 @@ const Register = () => {
 
   const prev = () => setCurrent((prev) => prev - 1)
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     console.log("Received values:", values)
+    // console.log(response)
     message.success("Registration successful!")
   }
 
@@ -96,7 +125,10 @@ const Register = () => {
     {
       title: t("personalDetails"),
       content: (
-        <>
+        <Flex vertical gap={14}>
+          <GenderInput
+            rules={[{ required: true, message: t("genderRequired") }]}
+          />
           <TextInput
             name="name"
             label={t("nameLabel")}
@@ -111,7 +143,7 @@ const Register = () => {
             prefix={<IdentificationIcon width={18} />}
             placeholder={t("surnamePlaceholder")}
           />
-        </>
+        </Flex>
       ),
     },
     {
@@ -141,8 +173,8 @@ const Register = () => {
             <CheckboxInput
               name="termsOfUse"
               rules={[{ required: true, message: t('termsOfUseRequired') }]}
-              />
-              <Link to='/'>{t('termsOfUse')}</Link>
+            />
+            <Link to='/'>{t('termsOfUse')}</Link>
           </Flex>
         </>
       ),
@@ -173,6 +205,7 @@ const Register = () => {
 
       <Card>
         <Form
+          disabled={isCheckingEmailInUse}
           name="register"
           form={form}
           layout="vertical"
@@ -181,8 +214,11 @@ const Register = () => {
           scrollToFirstError
           initialValues={{
             email: "",
+            gender: "",
             name: "",
             surname: "",
+            dob: "",
+            phone: "",
             password: "",
             confirmPassword: "",
             termsOfUse: false
@@ -193,7 +229,10 @@ const Register = () => {
             items={items}
             size="small"
             labelPlacement="vertical"
+            className="mb-6"
           />
+
+          {alert.message && <AlertComponent type={alert.type} message={alert.message} />}
 
           <div className="md:mt-8">
             {steps.map((step, index) => (
@@ -216,7 +255,7 @@ const Register = () => {
               {current < steps.length - 1 && (
                 <SolidButton
                   handleClick={handleNext}
-                  isDisabled={!clientReady}
+                  isDisabled={!clientReady || isCheckingEmailInUse}
                   text={t("next")}
                 />
               )}

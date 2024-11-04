@@ -2,6 +2,7 @@
   "name": "doclink-new",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://localhost:9000",
   "dependencies": {
     "@fingerprintjs/fingerprintjs": "^4.5.1",
     "@heroicons/react": "^2.1.5",

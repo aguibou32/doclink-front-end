@@ -11,6 +11,7 @@ const SolidButton = ({ icon = null, text = '', isDisabled, handleClick }) => {
             onClick={handleClick}
             className="text-base font-bold"
             disabled={isDisabled}
+            loading={isDisabled}
         >
             {text}
         </Button>

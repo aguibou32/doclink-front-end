@@ -41,5 +41,9 @@
   "enterCode": "Entrez le code envoyé à votre e-mail ou téléphone :",
   "twoStepsVerification": "Vérification en deux étapes",
   "problem": "Un problème ?",
-  "resendCode": "Renvoyer le code"
+  "resendCode": "Renvoyer le code",
+  "emailInUseError": "Cet e-mail est déjà utilisé.",
+   "male": "Homme",
+  "female": "Femme",
+  "identity": "Identité"
 }
