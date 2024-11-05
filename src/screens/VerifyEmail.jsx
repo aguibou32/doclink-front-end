@@ -63,10 +63,11 @@ function VerifyEmail() {
   }
 
   const handleResend = async () => {
-    console.log('test')
+    setAlert({type: '', message: ''})
     try {
-      await resendVerificationEmail(email).unwrap()
+      await resendVerificationEmail({ email: email }).unwrap()
     } catch (error) {
+      console.log(error?.data?.message || error?.message)
       setAlert({
         type: 'error',
         message: error?.data?.message || error?.message
@@ -139,7 +140,7 @@ function VerifyEmail() {
                 <Text>{t('problem')}</Text>
                 <LinkButton
                   isLoading={isResending}
-                  onClick={handleResend}
+                  handleClick={handleResend}
                   text={t('resendCode')}
                 />
               </div>
