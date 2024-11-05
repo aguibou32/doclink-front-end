@@ -6,7 +6,6 @@ import {
   Form,
   Card,
   Typography,
-  message,
   Steps,
   Flex,
 } from "antd"
@@ -47,12 +46,16 @@ import DOBInput from "../components/customs/inputs/DOBInput"
 import TermsAndConditionsModal from "../components/customs/TermsAndConditionsModal"
 import PhoneInputComponent from "../components/customs/inputs/PhoneInputComponent"
 
+import { useNavigate } from "react-router-dom"
+
 const { Content } = Layout
 const { Text, Title } = Typography
 
 const Register = () => {
 
   const { t } = useTranslation()
+  const navigate = useNavigate()
+  
   const [current, setCurrent] = useState(0)
   const [clientReady, setClientReady] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
@@ -101,19 +104,26 @@ const Register = () => {
   const onFinish = async (values) => {
     setAlert({ type: '', message: '' })
     const formattedDOB = moment(values.dob).format('DD/MM/YYYY')
-    console.log(formattedDOB)
+
+    const user = {
+      name: values.name,
+      surname: values.surname,
+      gender: values.gender,
+      dob: formattedDOB,
+      email: values.email,
+      phone: values.phone,
+      password: values.password,
+      terms: values.termsOfUse
+    }
 
     try {
-      await register({
-        name: values.name,
-        surname: values.surname,
-        gender: values.gender,
-        dob: formattedDOB,
-        email: values.email,
-        phone: values.phone,
-        password: values.password,
-        terms: values.termsOfUse
-      }).unwrap()
+      const response = await register(user).unwrap()
+      
+      const tempUserEmail = response.email
+      const encodedEmail = encodeURIComponent(tempUserEmail)
+
+      navigate(`/verify-email?email=${encodedEmail}`)
+      
     } catch (error) {
       setAlert({
         type: 'error',
@@ -191,13 +201,16 @@ const Register = () => {
             name='phone'
             label={t('phoneNumber')}
             rules={[{ required: true, message: t("phoneNumberRequired") }, validatePhoneNumber(t)]}
-            value={form.getFieldValue('phone')} 
+            value={form.getFieldValue('phone')}
             onChange={(phone) => form.setFieldsValue({ phone })}
+            isDisabled={isCheckingEmailInUse || isRegisteringUser}
           />
           <PasswordInput
             name="password"
             label={t("passwordLabel")}
-            rules={[validatePassword(t)]}
+            rules={[
+              { required: true, message: t("passwordRequired") },
+              validatePassword(t)]}
             prefix={<LockClosedIcon width={18} />}
             type="password"
             placeholder={t("passwordPlaceholder")}
@@ -213,7 +226,7 @@ const Register = () => {
             type="password"
             placeholder={t("passwordPlaceholder")}
           />
-          <Flex justify="start">
+          <Flex justify="start" horizontal>
             <CheckboxInput
               name="termsOfUse"
               rules={[{ required: true, message: t('termsAcceptance') }]}

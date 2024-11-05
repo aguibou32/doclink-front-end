@@ -55,9 +55,9 @@ export const validateConfirmPassword = (getFieldValue, t) => ({
 
 export const validatePhoneNumber = (t) => ({
   validator: (_, value) => {
-    if (!isValidPhoneNumber(value)) {
-      return Promise.reject(new Error(t('invalidPhoneNumber')))
+    if (value && !isValidPhoneNumber(value)) {
+      return Promise.reject(new Error(t('invalidPhoneNumber')));
     }
-    return Promise.resolve()
+    return Promise.resolve();
   }
 })

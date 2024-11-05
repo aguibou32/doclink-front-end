@@ -68,6 +68,5 @@
   "contactContent": "If you have any questions regarding these Terms and Conditions, please contact our support team.",
   "phoneNumber": "Phone number",
   "phoneNumberRequired": "Phone number is required.",
-  "invalidPhoneNumber": "Phone number invalid",
-  "phonePlaceholder": "Enter your phone number"
+  "invalidPhoneNumber": "Invalid phone number."
 }

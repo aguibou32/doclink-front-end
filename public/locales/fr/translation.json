@@ -51,7 +51,7 @@
   "dobRequired": "La date de naissance est requise.",
   "ageRequirement": "Vous devez avoir au moins 18 ans.",
   "maxAgeExceeded": "Veuillez entrer un âge réaliste inférieur à 120 ans.",
-  "dobPlaceholder": "Date de naissance.",
+  "dobPlaceholder": "Date de naissance",
   "termsAcceptance": "J'ai lu et j'accepte les conditions d'utilisation.",
   "termsTitle": "Conditions Générales",
   "termsIntro": "Veuillez lire attentivement ces conditions avant d'utiliser notre plateforme.",
@@ -67,7 +67,7 @@
   "contactTitle": "Informations de Contact",
   "contactContent": "Si vous avez des questions concernant ces conditions générales, veuillez contacter notre équipe de support.",
   "phoneNumberRequired": "Le numéro de téléphone est requis.",
-  "invalidPhoneNumber": "Numéro de téléphone invalid",
-  "phoneLabel": "Numéro de téléphone",
+  "invalidPhoneNumber": "Numéro de téléphone invalide.",
+  "phoneNumber": "Numéro de téléphone",
   "phonePlaceholder": "Entrez votre numéro de téléphone"
 }

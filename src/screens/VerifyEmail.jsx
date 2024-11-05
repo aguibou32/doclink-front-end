@@ -4,15 +4,18 @@ import SubmitButton from "../components/customs/buttons/SubmitButton"
 import LinkButton from '../components/customs/buttons/LinkButton'
 import { useTranslation } from "react-i18next"
 import OTPInput from "../components/customs/inputs/OTPInput"
+import { useNavigate, useLocation } from "react-router-dom"
+import { useDispatch, useSelector } from "react-redux"
+import { useVerifyEmailMutation, 
+  useResendVerificationEmailMutation } from "../slices/userVerificatonApiSlice"
+import { login as setCredentials } from '../slices/authSlice'
 
 const { Content } = Layout
 const { Text } = Typography
 
 function VerifyEmail() {
 
-
   const { t } = useTranslation()
-
   
   const handleSubmit = () => {
     
