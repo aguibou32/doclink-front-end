@@ -68,5 +68,11 @@
   "contactContent": "If you have any questions regarding these Terms and Conditions, please contact our support team.",
   "phoneNumber": "Phone number",
   "phoneNumberRequired": "Phone number is required.",
-  "invalidPhoneNumber": "Invalid phone number."
+  "invalidPhoneNumber": "Invalid phone number.",
+  "verificationCodePlaceholder": "Enter your verification code",
+  "invalidVerificationCode": "Invalid verification code.",
+  "codeRequired": "Verification code required.",
+  "verifyEmail": "Please verify your email",
+  "verificationCode": "Verification code",
+  "enterCodeSentToEmail": "Enter the code sent to your email"
 }

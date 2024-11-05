@@ -16,7 +16,6 @@ import PasswordInput from "../components/customs/inputs/PasswordInput"
 import { Link } from "react-router-dom"
 
 import { useTranslation } from "react-i18next"
-import SolidButton from "../components/customs/buttons/SolidButton"
 
 const { Content } = Layout
 const { Text, Title } = Typography
@@ -30,17 +29,6 @@ const Login = () => {
     const [clientReady, setClientReady] = useState(false)
     const [isFormValid, setIsFormValid] = useState(false)
 
-    const [isEmailVerificationModalOpen, setIsEmailVerificationModalOpen] = useState(false)
-
-    const showEmailVerificationModal = () => {
-        setIsEmailVerificationModalOpen(true)
-    }
-
-
-    const onFinish = (values) => {
-        console.log(`Received values: `, values)
-    }
-
     const handleFormChange = () => {
         const hasErrors = form
             .getFieldsError()
@@ -49,6 +37,10 @@ const Login = () => {
         const allTouched = form.isFieldsTouched(['email', 'password'], true)
 
         setIsFormValid(allTouched && !hasErrors)
+    }
+
+    const onFinish = (values) => {
+        console.log(`Received values: `, values)
     }
 
     useEffect(() => {
@@ -77,44 +69,40 @@ const Login = () => {
                     onFieldsChange={handleFormChange}
                     layout="vertical"
                 >
-                    <TextInput
-                        label={t('emailLabel')}
-                        name='email'
-                        rules={[
-                            { required: true, message: t('emailRequired') },
-                            { type: 'email', message: t('validEmail') }
-                        ]}
-                        prefix={<EnvelopeIcon width={18} />}
-                        type='email'
-                        placeholder={t('emailPlaceholder')}
-                    />
+                    <Flex vertical gap={14}>
+                        <TextInput
+                            label={t('emailLabel')}
+                            name='email'
+                            rules={[
+                                { required: true, message: t('emailRequired') },
+                                { type: 'email', message: t('validEmail') }
+                            ]}
+                            prefix={<EnvelopeIcon width={18} />}
+                            type='email'
+                            placeholder={t('emailPlaceholder')}
+                        />
 
-                    <PasswordInput
-                        label={t('passwordLabel')}
-                        name='password'
-                        rules={[{ required: true, message: t('inputPassword') }]}
-                        prefix={<LockClosedIcon width={18} />}
-                        type='password'
-                        placeholder={t('passwordPlaceholder')}
-                    />
+                        <PasswordInput
+                            label={t('passwordLabel')}
+                            name='password'
+                            rules={[{ required: true, message: t('inputPassword') }]}
+                            prefix={<LockClosedIcon width={18} />}
+                            type='password'
+                            placeholder={t('passwordPlaceholder')}
+                        />
 
-                    <Flex justify="space-between" align="baseline" className="">
-                        <CheckBoxInput name='remember' value="checked" text={t('rememberMe')} />
-                        <Link to='/forgot-password'>
-                            {t('forgotPassword')}
-                        </Link>
+                        <Flex justify="space-between" align="baseline">
+                            <CheckBoxInput name='remember' value="checked" text={t('rememberMe')} />
+                            <Link to='/forgot-password'>
+                                {t('forgotPassword')}
+                            </Link>
+                        </Flex>
+                        <SubmitButton
+                            isDisabled={!clientReady || !isFormValid}
+                            isSubmitting={false}
+
+                        />
                     </Flex>
-                    <SubmitButton
-                        isDisabled={!clientReady || !isFormValid}
-                        isSubmitting={false}
-
-                    />
-                    <SolidButton
-                        isDisabled={!clientReady || !isFormValid}
-                        isSubmitting={false}
-                        handleClick={showEmailVerificationModal}
-                        text="test"
-                    />
                 </Form>
             </Card>
         </Content>

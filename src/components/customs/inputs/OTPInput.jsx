@@ -1,26 +1,25 @@
-import Input from 'antd/es/input/Input'
-import { useState } from 'react'
+import { Form, Input } from "antd"
+import { useTranslation } from "react-i18next"
+import { KeyIcon } from "@heroicons/react/24/outline"
 
-function OTPInput() {
-
-  const [otpCode, setOTPCode] = useState()
-
-
-  const handleOtpChange = (value) => {
-    setOTPCode(value.toUpperCase())
-  }
+function OTPInput({ name, rules = [], label}) {
+  const { t } = useTranslation()
 
   return (
-    <Input.OTP
-      size="large"
-      value={otpCode}
-      onChange={handleOtpChange}
-      maxLength={6}
-      autoFocus
-      inputMode="numeric"
-      className="w-full flex justify-between gap-4"
-    />
+    <Form.Item
+      name={name}
+      label={label}
+      rules={rules}
+    >
+      <Input
+        prefix={<KeyIcon width={18} />}
+        maxLength={6}
+        autoFocus
+        inputMode="number"
+        placeholder={t('verificationCodePlaceholder')}
+        className="text-center"
+      />
+    </Form.Item>
   )
 }
-
 export default OTPInput

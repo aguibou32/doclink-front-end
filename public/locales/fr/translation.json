@@ -69,5 +69,11 @@
   "phoneNumberRequired": "Le numéro de téléphone est requis.",
   "invalidPhoneNumber": "Numéro de téléphone invalide.",
   "phoneNumber": "Numéro de téléphone",
-  "phonePlaceholder": "Entrez votre numéro de téléphone"
+  "phonePlaceholder": "Entrez votre numéro de téléphone",
+  "verificationCodePlaceholder": "Entrez votre code de vérification",
+  "invalidVerificationCode": "Code de verification invalide.",
+  "codeRequired": "Code de vérification requis.",
+  "verifyEmail": "Veuillez vérifier votre e-mail",
+  "verificationCode": "Code de verification",
+  "enterCodeSentToEmail": "Entrez le code envoyé à votre e-mail"
 }

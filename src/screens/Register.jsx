@@ -85,21 +85,16 @@ const Register = () => {
               errors: [t("emailInUseError")],
             },
           ])
-          return // Stop progressing to the next step if email is in use
+          return 
         }
       }
-
-      // Move to the next step if validation and (if needed) email check pass
       setCurrent((prev) => prev + 1)
     } catch (error) {
       console.error("Validation failed:", error)
     }
   }
 
-
   const handlePrevious = () => setCurrent((prev) => prev - 1)
-
-
 
   const onFinish = async (values) => {
     setAlert({ type: '', message: '' })
@@ -203,7 +198,7 @@ const Register = () => {
             rules={[{ required: true, message: t("phoneNumberRequired") }, validatePhoneNumber(t)]}
             value={form.getFieldValue('phone')}
             onChange={(phone) => form.setFieldsValue({ phone })}
-            isDisabled={isCheckingEmailInUse || isRegisteringUser}
+            isDisabled={isRegisteringUser}
           />
           <PasswordInput
             name="password"
@@ -348,5 +343,4 @@ const Register = () => {
     </Content>
   )
 }
-
 export default Register

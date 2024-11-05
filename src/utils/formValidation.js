@@ -1,6 +1,5 @@
 import { isValidPhoneNumber } from "react-phone-number-input"
 
-
 export const validateName = (t) => ({
   validator(_, value) {
     // Trim any leading and trailing spaces
@@ -57,6 +56,19 @@ export const validatePhoneNumber = (t) => ({
   validator: (_, value) => {
     if (value && !isValidPhoneNumber(value)) {
       return Promise.reject(new Error(t('invalidPhoneNumber')));
+    }
+    return Promise.resolve();
+  }
+})
+
+export const validateVerificationCode = (t) => ({
+  validator: (_, value) => {
+    if (value) {
+      const sanitizedInput = value ? value.replace(/[^0-9]/g, '') : '';
+
+      if (sanitizedInput.length !== 6) {
+        return Promise.reject(new Error(t('invalidVerificationCode')));
+      }
     }
     return Promise.resolve();
   }

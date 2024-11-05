@@ -13,7 +13,7 @@ const TextInput = ({
       name={name}
       label={label}
       rules={rules}
-      valuePropName="value" 
+      // valuePropName="value" 
     >
       <Input
         prefix={prefix}
