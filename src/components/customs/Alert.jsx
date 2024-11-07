@@ -1,11 +1,11 @@
 
 import { Alert } from "antd"
 
-function AlertComponent({message, type='success'}) {
+function AlertComponent({type = 'success', message }) {
   return (
     <Alert
-      message={message}
       type={type}
+      message={message}
       closable
       showIcon
     />

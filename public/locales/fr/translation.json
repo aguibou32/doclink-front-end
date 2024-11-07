@@ -11,6 +11,7 @@
   "previous": "Précédent",
   "submit": "Soumettre",
   "submitting": "Envoi en cours...",
+  "resubmitting": "Renvoi en cours...",
   "emailLabel": "E-mail",
   "passwordLabel": "Mot de passe",
   "nameLabel": "Prénom",
@@ -42,6 +43,7 @@
   "twoStepsVerification": "Vérification en deux étapes",
   "problem": "Un problème ?",
   "resendCode": "Renvoyer le code",
+  "resendCodeIn": "Renvoyer le code dans",
   "emailInUseError": "Cet e-mail est déjà utilisé.",
   "male": "Homme",
   "female": "Femme",
@@ -71,9 +73,10 @@
   "phoneNumber": "Numéro de téléphone",
   "phonePlaceholder": "Entrez votre numéro de téléphone",
   "verificationCodePlaceholder": "Entrez votre code de vérification",
-  "invalidVerificationCode": "Code de verification invalide.",
+  "invalidVerificationCode": "Code de vérification invalide.",
   "codeRequired": "Code de vérification requis.",
   "verifyEmail": "Veuillez vérifier votre e-mail",
-  "verificationCode": "Code de verification",
-  "enterCodeSentToEmail": "Entrez le code envoyé à votre e-mail"
+  "verificationCode": "Code de vérification",
+  "enterCodeSentToEmail": "Entrez le code envoyé à votre e-mail",
+  "verificationCodeMaxLength": "Le code de vérification doit comporter au maximum 6 caractères."
 }

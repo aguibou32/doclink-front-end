@@ -11,6 +11,7 @@
   "previous": "Previous",
   "submit": "Submit",
   "submitting": "Submitting...",
+  "resubmitting": "Resubmitting...",
   "emailLabel": "Email",
   "passwordLabel": "Password",
   "nameLabel": "First name",
@@ -42,6 +43,7 @@
   "twoStepsVerification": "Two-step verification",
   "problem": "A problem?",
   "resendCode": "Resend code",
+  "resendCodeIn": "Resend code in",
   "emailInUseError": "This email is already in use.",
   "male": "Male",
   "female": "Female",
@@ -74,5 +76,6 @@
   "codeRequired": "Verification code required.",
   "verifyEmail": "Please verify your email",
   "verificationCode": "Verification code",
-  "enterCodeSentToEmail": "Enter the code sent to your email"
+  "enterCodeSentToEmail": "Enter the code sent to your email",
+  "verificationCodeMaxLength": "The verification code must be at most 6 characters."
 }
