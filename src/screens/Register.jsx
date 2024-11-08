@@ -221,7 +221,7 @@ const Register = () => {
             type="password"
             placeholder={t("passwordPlaceholder")}
           />
-          <Flex justify="start" horizontal>
+          <Flex justify="start" horizontal={true}>
             <CheckboxInput
               name="termsOfUse"
               rules={[{ required: true, message: t('termsAcceptance') }]}

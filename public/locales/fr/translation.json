@@ -1,6 +1,7 @@
 {
   "help": "Aide",
   "login": "Connexion",
+  "register": "",
   "appointments": "Rendez-vous",
   "rememberMe": "Se souvenir de moi",
   "forgotPassword": "Mot de passe oublié ?",

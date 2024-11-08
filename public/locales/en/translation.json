@@ -1,6 +1,7 @@
 {
   "help": "Help",
   "login": "Login",
+  "register": "Register",
   "appointments": "Appointments",
   "rememberMe": "Remember me",
   "forgotPassword": "Forgot password?",
