@@ -1,7 +1,7 @@
 {
   "help": "Aide",
   "login": "Connexion",
-  "register": "",
+  "register": "S'inscrire",
   "appointments": "Rendez-vous",
   "rememberMe": "Se souvenir de moi",
   "forgotPassword": "Mot de passe oublié ?",
@@ -79,5 +79,10 @@
   "verifyEmail": "Veuillez vérifier votre e-mail",
   "verificationCode": "Code de vérification",
   "enterCodeSentToEmail": "Entrez le code envoyé à votre e-mail",
-  "verificationCodeMaxLength": "Le code de vérification doit comporter au maximum 6 caractères."
+  "verificationCodeMaxLength": "Le code de vérification doit comporter au maximum 6 caractères.",
+  "emailVerified": "E-mail vérifié.",
+  "myAccount": "Mon compte",
+  "logout": "Déconnexion",
+  "logoutSuccess": "Vous avez été deconnecté."
+  
 }

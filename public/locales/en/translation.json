@@ -78,5 +78,9 @@
   "verifyEmail": "Please verify your email",
   "verificationCode": "Verification code",
   "enterCodeSentToEmail": "Enter the code sent to your email",
-  "verificationCodeMaxLength": "The verification code must be at most 6 characters."
+  "verificationCodeMaxLength": "The verification code must be at most 6 characters.",
+  "emailVerified": "Email verified.",
+  "myAccount": "My account",
+  "logout": "Logout",
+  "logoutSuccess": "You have been logged out."
 }

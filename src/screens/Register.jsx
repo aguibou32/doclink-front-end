@@ -246,7 +246,7 @@ const Register = () => {
   }, [])
 
   return (
-    <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4 md:max-w-lg">
+    <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4">
       <Card>
         <Typography>
           <div className="flex justify-between">

@@ -8,6 +8,9 @@ import Register from './screens/Register'
 import ForgotPassword from './screens/ForgotPassword'
 import ResetPassword from './screens/RessetPassword'
 import VerifyEmail from './screens/VerifyEmail'
+
+import PrivateRoute from './components/auth-routes/PrivateRoute'
+
 import { Provider } from 'react-redux'
 import store from './store'
 
@@ -23,14 +26,27 @@ import {
 
 const router = createBrowserRouter(createRoutesFromElements(
 
+  // Public routes
   <Route path='/' element={<App />}>
+
+    {/* Public routes */}
     <Route index={true} element={<Home />} />
     <Route path='/login' element={<Login />} />
     <Route path='/register' element={<Register />} />
     <Route path='/verify-email' element={<VerifyEmail />} />
     <Route path='/forgot-password' element={<ForgotPassword />} />
     <Route path='/reset-password' element={<ResetPassword />} />
+
+
+    {/* Private routes */}
+    <Route path='' element={<PrivateRoute />}>
+      
+    </Route>
+
   </Route>
+
+
+
 ))
 
 const root = ReactDOM.createRoot(document.getElementById('root'))

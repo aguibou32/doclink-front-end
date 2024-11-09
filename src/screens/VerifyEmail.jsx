@@ -93,8 +93,12 @@ function VerifyEmail() {
     }
 
     try {
-      await verifyEmail(data).unwrap()
+      const response = await verifyEmail(data).unwrap()
+
+      dispatch(setCredentials({...response}))
+      navigate('/')
       message.success(t('emailVerified'))
+      
     } catch (error) {
       setAlert({
         type: 'error',
@@ -156,7 +160,7 @@ function VerifyEmail() {
               <Text>{t('problem')}</Text>
               <LinkButton
                 isLoading={isResending}
-                isDisabled={isCooldownActive}
+                isDisabled={isResending || isCooldownActive}
                 handleClick={handleResend}
                 text={
                   isResending
