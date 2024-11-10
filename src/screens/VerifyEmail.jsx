@@ -160,7 +160,7 @@ function VerifyEmail() {
               <Text>{t('problem')}</Text>
               <LinkButton
                 isLoading={isResending}
-                isDisabled={isResending || isCooldownActive}
+                isDisabled={isCooldownActive || isResending || isVerifyingEmail}
                 handleClick={handleResend}
                 text={
                   isResending

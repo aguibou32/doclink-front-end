@@ -80,8 +80,8 @@ const HeaderComponent = () => {
     try {
       await logoutApiCall().unwrap()
       dispatch(logout())
-      message.success(t('logoutSuccess'))
       navigate('/')
+      message.success(t('logoutSuccess'))
     } catch (error) {
       message.error(error?.data?.message || error?.message)
     }
