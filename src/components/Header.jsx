@@ -27,7 +27,7 @@ import {
   Dropdown,
   Space,
   Flex,
-  message,
+  message
 } from 'antd'
 
 import { DownOutlined } from '@ant-design/icons'
@@ -61,7 +61,7 @@ const HeaderComponent = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [logoutApiCall] = useLogoutMutation()
+  const [logoutApiCall, {isLoading: isLogingOutUser}] = useLogoutMutation()
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const openDrawer = () => setIsDrawerOpen(true)
@@ -92,7 +92,10 @@ const HeaderComponent = () => {
   }, [location])
 
   return (
+    
     <Header className='bg-white border-b shadow-sm'>
+      
+      { isLogingOutUser && message.loading('logout user') }
 
       {/* Inner container */}
       <Row className='w-full flex justify-between items-center' >

@@ -84,6 +84,6 @@
   "emailVerified": "E-mail vérifié.",
   "myAccount": "Mon compte",
   "logout": "Déconnexion",
-  "logoutSuccess": "Vous avez été deconnecté."
-  
+  "logoutSuccess": "Vous avez été deconnecté.",
+  "loggout": "Déconnexion..."
 }

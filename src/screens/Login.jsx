@@ -7,8 +7,7 @@ import {
     Form,
     Flex,
     Card,
-    Typography,
-    message
+    Typography
 } from "antd"
 
 import SubmitButton from '../components/customs/buttons/SubmitButton'

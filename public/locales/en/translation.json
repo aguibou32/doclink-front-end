@@ -83,5 +83,6 @@
   "emailVerified": "Email verified.",
   "myAccount": "My account",
   "logout": "Logout",
-  "logoutSuccess": "You have been logged out."
+  "logoutSuccess": "You have been logged out.",
+  "loggout": "Logout..."
 }
