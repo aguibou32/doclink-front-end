@@ -44,6 +44,7 @@
   "twoStepsVerification": "Vérification en deux étapes",
   "problem": "Un problème ?",
   "resendCode": "Renvoyer le code",
+  "resendingCode": "Renvoie en cours...",
   "resendCodeIn": "Renvoyer le code dans",
   "emailInUseError": "Cet e-mail est déjà utilisé.",
   "male": "Homme",

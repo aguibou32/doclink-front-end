@@ -164,7 +164,7 @@ function VerifyEmail() {
                 handleClick={handleResend}
                 text={
                   isResending
-                    ? t('resubmitting')
+                    ? t('resendingCode')
                     : isCooldownActive
                       ? `${t('resendCodeIn')} ${countdown}`
                       : t('resendCode')

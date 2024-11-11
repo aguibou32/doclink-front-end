@@ -35,8 +35,6 @@ import LinkButton from "../components/customs/buttons/LinkButton"
 const { Content } = Layout
 const { Text, Title } = Typography
 
-
-
 const Login = () => {
 
     const { t } = useTranslation()
@@ -91,8 +89,8 @@ const Login = () => {
 
         try {
             const response = await login(data).unwrap()
-
             console.log(response)
+            
         } catch (error) {
             setAlert({ type: 'error', message: error?.data?.message || error?.message })
         }
@@ -104,7 +102,6 @@ const Login = () => {
             navigate(redirect)
         }
     }, [userInfo, redirect, navigate])
-
 
     return (
         <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4">
