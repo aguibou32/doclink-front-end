@@ -6,8 +6,14 @@ import {
   Typography,
   Form,
   Flex,
+  Dropdown,
+  Row,
+  Space,
   message
 } from "antd"
+
+import { DownOutlined, LoadingOutlined } from '@ant-design/icons'
+
 import SubmitButton from "../components/customs/buttons/SubmitButton"
 import OTPInput from "../components/customs/inputs/OTPInput"
 import AlertComponent from "../components/customs/Alert"
@@ -15,13 +21,15 @@ import AlertComponent from "../components/customs/Alert"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
+import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline"
+
+
 import {
   useVerifyEmailMutation,
-  useResendVerificationEmailMutation
+  useResendEmailChangeVerificationMutation
 } from "../slices/userVerificatonApiSlice"
 
 import { login as setCredentials } from '../slices/authSlice'
-import LinkButton from "../components/customs/buttons/LinkButton"
 import { validateVerificationCode } from "../utils/formValidation"
 
 import useCooldown from "../utils/useCooldown"
@@ -32,7 +40,7 @@ const { Text, Title } = Typography
 function VerifyEmail() {
 
   const [verifyEmail, { isLoading: isVerifyingEmail }] = useVerifyEmailMutation()
-  const [resendVerificationEmail, { isLoading: isResending }] = useResendVerificationEmailMutation()
+  const [resendVerificationEmail, { isLoading: isResending }] = useResendEmailChangeVerificationMutation()
 
   const { t } = useTranslation()
 
@@ -42,8 +50,13 @@ function VerifyEmail() {
 
   const { search } = useLocation()
   const queryParams = new URLSearchParams(search)
+
   const encodedEmail = queryParams.get('email')
+  const encodedPhone = queryParams.get('phone')
+
   const email = encodedEmail ? decodeURIComponent(encodedEmail) : null
+  const phone = encodedPhone ? decodeURIComponent(encodedPhone) : null
+
   const { userInfo } = useSelector(state => state.auth)
 
   const navigate = useNavigate()
@@ -95,10 +108,10 @@ function VerifyEmail() {
     try {
       const response = await verifyEmail(data).unwrap()
 
-      dispatch(setCredentials({...response}))
+      dispatch(setCredentials({ ...response }))
       navigate('/')
       message.success(t('emailVerified'))
-      
+
     } catch (error) {
       setAlert({
         type: 'error',
@@ -156,21 +169,48 @@ function VerifyEmail() {
               isDisabled={!clientReady || !isFormValid || isVerifyingEmail}
               isSubmitting={isVerifyingEmail}
             />
-            <div className="flex justify-between items-center">
+            <Space className="flex justify-between">
               <Text>{t('problem')}</Text>
-              <LinkButton
-                isLoading={isResending}
-                isDisabled={isCooldownActive || isResending || isVerifyingEmail}
-                handleClick={handleResend}
-                text={
-                  isResending
-                    ? t('resendingCode')
-                    : isCooldownActive
-                      ? `${t('resendCodeIn')} ${countdown}`
-                      : t('resendCode')
-                }
-              />
-            </div>
+
+              <Dropdown.Button
+                type="" size="small" loading={isResending}
+                disabled={isResending}
+                icon={<DownOutlined />}
+                menu={{
+                  items: [
+                    {
+                      label: (
+                        <a onClick={handleResend}>
+                          <Flex gap={14}>
+                            <EnvelopeIcon width={18} />
+                            <Text>{email}</Text>
+                          </Flex>
+                        </a>
+                      ),
+                      key: 0
+                    },
+                    phone && (
+                      {
+                        type: 'divider',
+                      },
+                      {
+                        label: (
+                          <a onClick={handleResend}>
+                            <Flex gap={14}>
+                              <PhoneIcon width={18} />
+                              <Text>{phone}</Text>
+                            </Flex>
+                          </a>
+                        ),
+                        key: 1
+                      }
+                    )
+                  ]
+                }}
+              >
+                {isResending ? t('resendingCode') : t('resendCode')}
+              </Dropdown.Button>
+            </Space>
           </Flex>
         </Form>
       </Card>

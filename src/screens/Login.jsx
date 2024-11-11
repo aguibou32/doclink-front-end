@@ -88,8 +88,11 @@ const Login = () => {
 
         try {
             const response = await login(data).unwrap()
-            console.log(response)
-            
+            if(response.isTwoFactorRequired){
+                const userEmail = encodeURIComponent(response.email)
+                const phoneNumber = encodeURIComponent(response.phone)
+                navigate(`/verify-email?email=${userEmail}&phone=${phoneNumber}`)
+            }
         } catch (error) {
             setAlert({ type: 'error', message: error?.data?.message || error?.message })
         }
