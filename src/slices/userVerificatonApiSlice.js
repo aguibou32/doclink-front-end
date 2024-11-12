@@ -19,13 +19,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
         body: email
       })
     }),
-    resendTemUserVerificationEmail: builder.mutation({
-      query: email => ({
-        url: `${USER_VERIFICATION}/resend-temp-user-verification-email`,
-        method: 'POST',
-        body: email
-      })
-    }),
 
     verifyTwoFactor: builder.mutation({
       query: data => ({
@@ -97,7 +90,6 @@ export const usersApiSlice = apiSlice.injectEndpoints({
 export const {
   useVerifyEmailMutation,
   useResendUserVerificationEmailMutation,
-  useResendTemUserVerificationEmailMutation,
   useVerifyTwoFactorMutation,
   useResend2FACodeByEmailMutation,
   useSend2FACodeBySMSMutation,

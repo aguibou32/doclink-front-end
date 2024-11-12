@@ -45,7 +45,7 @@
   "problem": "Un problème ?",
   "resendCode": "Renvoyer le code",
   "resendingCode": "Renvoie en cours...",
-  "resendCodeIn": "Renvoyer le code dans",
+  "resendCodeIn": "Renvoyer le code dans {countdown}",
   "emailInUseError": "Cet e-mail est déjà utilisé.",
   "male": "Homme",
   "female": "Femme",

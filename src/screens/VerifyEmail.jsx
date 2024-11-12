@@ -7,12 +7,11 @@ import {
   Form,
   Flex,
   Dropdown,
-  Row,
   Space,
   message
 } from "antd"
 
-import { DownOutlined, LoadingOutlined } from '@ant-design/icons'
+import { DownOutlined } from '@ant-design/icons'
 
 import SubmitButton from "../components/customs/buttons/SubmitButton"
 import OTPInput from "../components/customs/inputs/OTPInput"
@@ -22,7 +21,7 @@ import { useNavigate, useLocation } from "react-router-dom"
 import { useDispatch, useSelector } from "react-redux"
 
 import { EnvelopeIcon, PhoneIcon } from "@heroicons/react/24/outline"
-
+import getDeviceId from "../utils/deviceId"
 
 import {
   useVerifyEmailMutation,
@@ -40,7 +39,7 @@ const { Text, Title } = Typography
 function VerifyEmail() {
 
   const [verifyEmail, { isLoading: isVerifyingEmail }] = useVerifyEmailMutation()
-  const [resendVerificationEmail, { isLoading: isResending }] = useResendEmailChangeVerificationMutation()
+  const [resendVerificationEmail, { isLoading: isResendingCodeToEmail }] = useResendEmailChangeVerificationMutation()
 
   const { t } = useTranslation()
 
@@ -79,17 +78,17 @@ function VerifyEmail() {
     setIsFormValid(isFieldTouched && !hasErrors)
   }
 
-  const handleResend = async () => {
+  const handleResendVerificationCodeToEmail = async () => {
     setAlert({ type: '', message: '' })
     try {
       const response = await resendVerificationEmail({ email: email }).unwrap()
+      console.log(response.message)
       setAlert({
         type: 'success',
         message: response.message
       })
       startCooldown()
     } catch (error) {
-      console.log(error?.data?.message || error?.message)
       setAlert({
         type: 'error',
         message: error?.data?.message || error?.message
@@ -100,9 +99,15 @@ function VerifyEmail() {
   const onFinish = async (values) => {
     setAlert({ type: '', message: '' })
 
+    const deviceId = await getDeviceId()
+    const deviceName = navigator.userAgent
+    const verificationCode = values.verificationCode
+
     const data = {
       email: email,
-      verificationCode: values.verificationCode
+      verificationCode,
+      deviceId,
+      deviceName
     }
 
     try {
@@ -110,7 +115,7 @@ function VerifyEmail() {
 
       dispatch(setCredentials({ ...response }))
       navigate('/')
-      message.success(t('emailVerified'))
+      message.success(response.message)
 
     } catch (error) {
       setAlert({
@@ -151,7 +156,7 @@ function VerifyEmail() {
           {alert.message && <AlertComponent type={alert.type} message={alert.message} />}
         </div>
         <Form
-          disabled={isVerifyingEmail || isResending}
+          disabled={isVerifyingEmail || isResendingCodeToEmail}
           form={form}
           name="verifyEmail"
           initialValues={{ verificationCode: '' }}
@@ -173,14 +178,14 @@ function VerifyEmail() {
               <Text>{t('problem')}</Text>
 
               <Dropdown.Button
-                type="" size="small" loading={isResending}
-                disabled={isResending}
+                type="" size="small" loading={isResendingCodeToEmail}
+                disabled={isResendingCodeToEmail || isCooldownActive}
                 icon={<DownOutlined />}
                 menu={{
                   items: [
                     {
                       label: (
-                        <a onClick={handleResend}>
+                        <a onClick={handleResendVerificationCodeToEmail}>
                           <Flex gap={14}>
                             <EnvelopeIcon width={18} />
                             <Text>{email}</Text>
@@ -195,7 +200,7 @@ function VerifyEmail() {
                       },
                       {
                         label: (
-                          <a onClick={handleResend}>
+                          <a onClick={handleResendVerificationCodeToEmail}>
                             <Flex gap={14}>
                               <PhoneIcon width={18} />
                               <Text>{phone}</Text>
@@ -208,7 +213,14 @@ function VerifyEmail() {
                   ]
                 }}
               >
-                {isResending ? t('resendingCode') : t('resendCode')}
+                {
+                  isResendingCodeToEmail ?
+                    t('resendingCode') :
+                    isCooldownActive ?
+                      (`${t('resendCodeIn')}  ${ countdown } `):
+                      t('resendCode')
+                }
+
               </Dropdown.Button>
             </Space>
           </Flex>

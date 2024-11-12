@@ -7,7 +7,8 @@ import {
     Form,
     Flex,
     Card,
-    Typography
+    Typography,
+    message
 } from "antd"
 
 import SubmitButton from '../components/customs/buttons/SubmitButton'
@@ -21,7 +22,8 @@ import { Link } from "react-router-dom"
 
 import { useTranslation } from "react-i18next"
 
-import { login as seCredentials } from "../slices/authSlice"
+import { login as setCredentials } from "../slices/authSlice"
+
 import { useDispatch } from "react-redux"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useSelector } from "react-redux"
@@ -73,7 +75,6 @@ const Login = () => {
     const onFinish = async (values) => {
         setAlert({ type: '', message: '' })
 
-
         const { email, password, rememberMe } = values
         const deviceId = await getDeviceId()
         const deviceName = navigator.userAgent
@@ -92,6 +93,10 @@ const Login = () => {
                 const userEmail = encodeURIComponent(response.email)
                 const phoneNumber = encodeURIComponent(response.phone)
                 navigate(`/verify-email?email=${userEmail}&phone=${phoneNumber}`)
+            }else{
+                dispatch(setCredentials({...response}))
+                navigate('/')
+                message.success(response.message)
             }
         } catch (error) {
             setAlert({ type: 'error', message: error?.data?.message || error?.message })

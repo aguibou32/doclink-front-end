@@ -94,8 +94,6 @@ const HeaderComponent = () => {
   return (
     
     <Header className='bg-white border-b shadow-sm'>
-      
-      { isLogingOutUser && message.loading('logout user') }
 
       {/* Inner container */}
       <Row className='w-full flex justify-between items-center' >
