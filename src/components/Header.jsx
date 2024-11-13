@@ -107,8 +107,8 @@ const HeaderComponent = () => {
         </Col>
 
         {/* Hamburger icon for mobile menu */}
-        <Col className='block lg:hidden'>
-          <OutlineButton icon={<Bars4Icon color='black' onClick={openDrawer} />} />
+        <Col className='block lg:hidden' onClick={openDrawer}>
+          <OutlineButton icon={<Bars4Icon color='black' />} />
         </Col>
 
         {/* Drawer For the Mobile Menu */}

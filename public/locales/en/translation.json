@@ -45,7 +45,7 @@
   "problem": "A problem?",
   "resendCode": "Resend code",
   "resendingCode": "Resending code...",
-  "resendCodeIn": "Resend code in {countdown}",
+  "resendCodeIn": "Resend code in",
   "emailInUseError": "This email is already in use.",
   "male": "Male",
   "female": "Female",

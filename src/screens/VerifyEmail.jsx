@@ -25,7 +25,7 @@ import getDeviceId from "../utils/deviceId"
 
 import {
   useVerifyEmailMutation,
-  useResendEmailChangeVerificationMutation
+  useResendVerificationEmailMutation
 } from "../slices/userVerificatonApiSlice"
 
 import { login as setCredentials } from '../slices/authSlice'
@@ -39,8 +39,7 @@ const { Text, Title } = Typography
 function VerifyEmail() {
 
   const [verifyEmail, { isLoading: isVerifyingEmail }] = useVerifyEmailMutation()
-  const [resendVerificationEmail, { isLoading: isResendingCodeToEmail }] = useResendEmailChangeVerificationMutation()
-
+  const [resendVerificationEmail, { isLoading: isResendingCodeToEmail }] = useResendVerificationEmailMutation()
   const { t } = useTranslation()
 
   const [form] = Form.useForm()
@@ -80,6 +79,7 @@ function VerifyEmail() {
 
   const handleResendVerificationCodeToEmail = async () => {
     setAlert({ type: '', message: '' })
+
     try {
       const response = await resendVerificationEmail({ email: email }).unwrap()
       console.log(response.message)
@@ -214,13 +214,12 @@ function VerifyEmail() {
                 }}
               >
                 {
-                  isResendingCodeToEmail ?
-                    t('resendingCode') :
-                    isCooldownActive ?
-                      (`${t('resendCodeIn')}  ${ countdown } `):
-                      t('resendCode')
+                  isResendingCodeToEmail
+                    ? t('resendingCode')
+                    : isCooldownActive
+                      ? `${t('resendCodeIn')} ${countdown}`
+                      : t('resendCode')
                 }
-
               </Dropdown.Button>
             </Space>
           </Flex>
