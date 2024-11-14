@@ -17,7 +17,7 @@ function OTPInput({ name, rules = [], label}) {
         autoFocus
         inputMode="number"
         placeholder={t('verificationCodePlaceholder')}
-        className="text-center"
+        className="text-base"
       />
     </Form.Item>
   )

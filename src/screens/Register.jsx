@@ -41,7 +41,6 @@ import {
   useRegisterMutation
 } from "../slices/usersApiSlice"
 
-
 import GenderInput from "../components/customs/inputs/GenderInput"
 import DOBInput from "../components/customs/inputs/DOBInput"
 import TermsAndConditionsModal from "../components/customs/TermsAndConditionsModal"
@@ -99,7 +98,10 @@ const Register = () => {
 
   const onFinish = async (values) => {
     setAlert({ type: '', message: '' })
-    const formattedDOB = moment(values.dob).format('DD/MM/YYYY')
+
+    console.log(values.dob)
+    
+    const formattedDOB = moment(values.dob).format('YYYY-MM-DD')
 
     const user = {
       name: values.name,

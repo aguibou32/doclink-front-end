@@ -178,7 +178,7 @@ function VerifyEmail() {
               <Text>{t('problem')}</Text>
 
               <Dropdown.Button
-                type="" size="small" loading={isResendingCodeToEmail}
+                size="medium" loading={isResendingCodeToEmail}
                 disabled={isResendingCodeToEmail || isCooldownActive}
                 icon={<DownOutlined />}
                 menu={{
