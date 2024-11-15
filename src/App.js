@@ -8,11 +8,9 @@ function App() {
     <>
       <HeaderComponent />
       <main>
-        
         <Outlet />
       </main>
     </>
   )
 }
-
 export default App

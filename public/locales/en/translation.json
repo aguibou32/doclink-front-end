@@ -84,5 +84,8 @@
   "myAccount": "My account",
   "logout": "Logout",
   "logoutSuccess": "You have been logged out.",
-  "loggout": "Logout..."
+  "loggout": "Logout...",
+  "termsAndConditionsPrompt": "To open an account with DocLink, you must agree to the terms and conditions.",
+  "agreeToTerms": "I agree to the",
+  "termsAndConditions": "terms and conditions"
 }

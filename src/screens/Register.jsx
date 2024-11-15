@@ -46,7 +46,8 @@ import DOBInput from "../components/customs/inputs/DOBInput"
 import TermsAndConditionsModal from "../components/customs/TermsAndConditionsModal"
 import PhoneInputComponent from "../components/customs/inputs/PhoneInputComponent"
 
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
+import { useSelector } from "react-redux"
 
 const { Content } = Layout
 const { Text, Title } = Typography
@@ -54,8 +55,15 @@ const { Text, Title } = Typography
 const Register = () => {
 
   const { t } = useTranslation()
+
   const navigate = useNavigate()
-  
+
+  const { search } = useLocation()
+  const sp = new URLSearchParams(search)
+  const redirect = sp.get("redirect") || '/'
+
+  const { userInfo } = useSelector(state => state.auth)
+
   const [current, setCurrent] = useState(0)
   const [clientReady, setClientReady] = useState(false)
   const [isFormValid, setIsFormValid] = useState(false)
@@ -85,7 +93,7 @@ const Register = () => {
               errors: [t("emailInUseError")],
             },
           ])
-          return 
+          return
         }
       }
       setCurrent((prev) => prev + 1)
@@ -99,8 +107,6 @@ const Register = () => {
   const onFinish = async (values) => {
     setAlert({ type: '', message: '' })
 
-    console.log(values.dob)
-    
     const formattedDOB = moment(values.dob).format('YYYY-MM-DD')
 
     const user = {
@@ -116,12 +122,12 @@ const Register = () => {
 
     try {
       const response = await register(user).unwrap()
-      
+
       const tempUserEmail = response.email
       const encodedEmail = encodeURIComponent(tempUserEmail)
 
       navigate(`/verify-email?email=${encodedEmail}`)
-      
+
     } catch (error) {
       setAlert({
         type: 'error',
@@ -224,15 +230,22 @@ const Register = () => {
             type="password"
             placeholder={t("passwordPlaceholder")}
           />
-          <Flex justify="start" horizontal={true}>
-            <CheckboxInput
-              name="termsOfUse"
-              rules={[{ required: true, message: t('termsAcceptance') }]}
-            />
-            <LinkButton
-              handleClick={() => setIsTermsModalIsOpen(true)}
-              text={t('termsAcceptance')}
-            />
+          <Flex vertical gap={8}>
+            <Text className="text-sm font-light">
+              {t('termsAndConditionsPrompt')}
+            </Text>
+            <Flex justify="start" align="baseline">
+              <CheckboxInput
+                name="termsOfUse"
+                rules={[{ required: true, message: t("termsAcceptance") }]}
+              />
+              <Text className="text-sm font-medium">
+                {t("agreeToTerms")}{" "}
+                <Link to="/terms" className="text-sky-600 hover:underline">
+                  {t("termsAndConditions")}
+                </Link>
+              </Text>
+            </Flex>
           </Flex>
         </Flex>
       ),
@@ -246,7 +259,12 @@ const Register = () => {
 
   useEffect(() => {
     setClientReady(true)
-  }, [])
+
+    if (userInfo) {
+      navigate(redirect)
+    }
+
+  }, [userInfo, redirect, navigate])
 
   return (
     <Content className="container mx-auto max-w-sm flex flex-col mt-24 space-y-4">

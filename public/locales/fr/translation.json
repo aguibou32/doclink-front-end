@@ -85,5 +85,8 @@
   "myAccount": "Mon compte",
   "logout": "Déconnexion",
   "logoutSuccess": "Vous avez été deconnecté.",
-  "loggout": "Déconnexion..."
+  "loggout": "Déconnexion...",
+  "termsAndConditionsPrompt": "Pour ouvrir un compte avec DocLink, vous devez accepter les termes et conditions.",
+  "agreeToTerms": "J'accepte les",
+  "termsAndConditions": "conditions d'utilisation."
 }

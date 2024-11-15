@@ -37,15 +37,12 @@ const router = createBrowserRouter(createRoutesFromElements(
     <Route path='/forgot-password' element={<ForgotPassword />} />
     <Route path='/reset-password' element={<ResetPassword />} />
 
-
     {/* Private routes */}
     <Route path='' element={<PrivateRoute />}>
-      
+
     </Route>
 
   </Route>
-
-
 
 ))
 
