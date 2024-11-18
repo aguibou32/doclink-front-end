@@ -179,18 +179,22 @@ function VerifyEmail() {
 
               <Dropdown.Button
                 size="medium" loading={isResendingCodeToEmail}
-                disabled={isResendingCodeToEmail || isCooldownActive}
+                disabled = {
+                  isVerifyingEmail ||
+                  isResendingCodeToEmail ||
+                  isCooldownActive
+                }
                 icon={<DownOutlined />}
                 menu={{
                   items: [
                     {
                       label: (
-                        <a onClick={handleResendVerificationCodeToEmail}>
+                        <div onClick={handleResendVerificationCodeToEmail}>
                           <Flex gap={14}>
                             <EnvelopeIcon width={18} />
                             <Text>{email}</Text>
                           </Flex>
-                        </a>
+                        </div>
                       ),
                       key: 0
                     },
@@ -200,12 +204,12 @@ function VerifyEmail() {
                       },
                       {
                         label: (
-                          <a onClick={handleResendVerificationCodeToEmail}>
+                          <div onClick={handleResendVerificationCodeToEmail}>
                             <Flex gap={14}>
                               <PhoneIcon width={18} />
                               <Text>{phone}</Text>
                             </Flex>
-                          </a>
+                          </div>
                         ),
                         key: 1
                       }

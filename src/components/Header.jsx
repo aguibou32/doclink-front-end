@@ -61,7 +61,7 @@ const HeaderComponent = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
-  const [logoutApiCall, {isLoading: isLogingOutUser}] = useLogoutMutation()
+  const [logoutApiCall] = useLogoutMutation()
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const openDrawer = () => setIsDrawerOpen(true)
@@ -189,24 +189,24 @@ const HeaderComponent = () => {
                     },
                     {
                       label: (
-                        <a onClick={handleLogout}>
+                        <div onClick={handleLogout}>
                           <Flex gap={14}>
                             <ArrowRightEndOnRectangleIcon width={18} />
                             <Text>{t('logout')}</Text>
                           </Flex>
-                        </a>
+                        </div>
                       ),
                       key: '1',
                     }
                   ],
                 }}
               >
-                <a onClick={(e) => e.preventDefault()}>
+                <div onClick={(e) => e.preventDefault()}>
                   <Space>
                     {`${userInfo.name} ${userInfo.surname}`}
                     <DownOutlined />
                   </Space>
-                </a>
+                </div>
               </Dropdown>
             ) : (
               <>

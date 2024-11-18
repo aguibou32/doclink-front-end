@@ -164,7 +164,8 @@ const Login = () => {
                             </Link>
                         </Flex>
                         <SubmitButton
-                            isDisabled={!clientReady || 
+                            isDisabled={
+                                !clientReady || 
                                 !isFormValid ||
                                 isLoginUser
                             }

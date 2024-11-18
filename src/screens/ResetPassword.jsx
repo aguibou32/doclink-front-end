@@ -6,29 +6,68 @@ import {
     Flex,
     Card,
     Typography,
+    message,
 } from "antd"
 
+import AlertComponent from "../components/customs/Alert"
 import SubmitButton from '../components/customs/buttons/SubmitButton'
 import PasswordInput from "../components/customs/inputs/PasswordInput"
 import { LockClosedIcon } from "@heroicons/react/24/outline"
 import { validatePassword, validateConfirmPassword } from "../utils/formValidation"
 
 import { useTranslation } from "react-i18next"
+import {
+    useNavigate,
+    useParams
+} from "react-router-dom"
+
+import { useResetPasswordMutation } from "../slices/usersApiSlice"
 
 const { Content } = Layout
 const { Text, Title } = Typography
 
 
+
 const ResetPassword = () => {
 
     const { t } = useTranslation()
+    const navigate = useNavigate()
+
+    const [resetPassword, { isLoading: isResettingPassword }] = useResetPasswordMutation()
+
+    const { token } = useParams()
+
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    })
 
     const [form] = Form.useForm()
     const [clientReady, setClientReady] = useState(false)
     const [isFormValid, setIsFormValid] = useState(false)
 
-    const onFinish = (values) => {
-        console.log(`Received values: `, values)
+    const onFinish = async values => {
+        setAlert({
+            type: '',
+            message: ''
+        })
+
+        const { password } = values
+
+        try {
+            const response = await resetPassword({
+                newPassword: password,
+                token
+            }).unwrap()
+            navigate('/login')
+            message.success(response.message)
+        } catch (error) {
+            setAlert({
+                type: 'error',
+                message: error?.data?.message || error?.message
+            })
+        }
+
     }
 
     const handleFormChange = () => {
@@ -53,13 +92,16 @@ const ResetPassword = () => {
                 </Flex>
             </Card>
             <Card>
+                <div className="mb-4">
+                    {alert.message && <AlertComponent type={alert.type} message={alert.message} />}
+                </div>
                 <Form
-                    disabled={false}
+                    disabled={isResettingPassword}
                     form={form}
                     name="login"
                     initialValues={{
                         password: '',
-                        confirmPassword : ''
+                        confirmPassword: ''
                     }}
                     onFinish={onFinish}
                     onFieldsChange={handleFormChange}
@@ -85,8 +127,12 @@ const ResetPassword = () => {
                         placeholder={t("passwordPlaceholder")}
                     />
                     <SubmitButton
-                        isDisabled={!clientReady || !isFormValid}
-                        isSubmitting={false}
+                        isDisabled={
+                            !clientReady || 
+                            !isFormValid ||
+                            isResettingPassword
+                        }
+                        isSubmitting={isResettingPassword}
                     />
                 </Form>
             </Card>

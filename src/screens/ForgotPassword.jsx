@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react"
+import { useForgotPasswordMutation } from "../slices/usersApiSlice"
+import AlertComponent from "../components/customs/Alert"
 
 import {
     Layout,
@@ -18,16 +20,37 @@ const { Content } = Layout
 const { Text, Title } = Typography
 
 
+
 const ForgotPassword = () => {
 
     const { t } = useTranslation()
+    const [forgotPassword, { isLoading: isSendingResetLink }] = useForgotPasswordMutation()
+
+    const [alert, setAlert] = useState({
+        type: '',
+        message: ''
+    })
 
     const [form] = Form.useForm()
     const [clientReady, setClientReady] = useState(false)
     const [isFormValid, setIsFormValid] = useState(false)
 
-    const onFinish = (values) => {
+    const onFinish = async values => {
+        setAlert({ type: '', message: '' })
         console.log(`Received values: `, values)
+
+        const { email } = values
+
+        try {
+            const response = await forgotPassword({ email }).unwrap()
+            setAlert({
+                type: 'success',
+                message: response.message
+            })
+
+        } catch (error) {
+            setAlert({ type: 'error', message: error?.data?.message || error?.message })
+        }
     }
 
     const handleFormChange = () => {
@@ -53,6 +76,9 @@ const ForgotPassword = () => {
                 </Flex>
             </Card>
             <Card>
+                <div className="mb-4">
+                    {alert.message && <AlertComponent type={alert.type} message={alert.message} />}
+                </div>
                 <Form
                     disabled={false}
                     form={form}
@@ -76,7 +102,11 @@ const ForgotPassword = () => {
                         placeholder={t('emailPlaceholder')}
                     />
                     <SubmitButton
-                        isDisabled={!clientReady || !isFormValid}
+                        isDisabled={
+                            !clientReady || 
+                            !isFormValid || 
+                            isSendingResetLink
+                        }
                         isSubmitting={false}
                     />
                 </Form>
